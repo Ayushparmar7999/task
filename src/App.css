@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
-}
+/* ===================================
+   Pioneer Landing Page - Layout
+   =================================== */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Outer wrapper - centers card on larger screens */
+.page-wrapper {
+  width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: stretch;
+  background-color: #111;
 }
 
-.App-link {
-  color: #61dafb;
+/* Inner container - mobile phone-like card */
+.page-container {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #F9B731 0%, #F5960A 100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== Orange Decorative Arcs (left side curves) ===== */
+.arc {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(200, 120, 10, 0.4);
+  background: transparent;
+}
+
+.arc-1 {
+  width: 280px;
+  height: 500px;
+  top: 40px;
+  left: -155px;
+  border-width: 2px;
+  transform: rotate(-10deg);
+}
+
+.arc-2 {
+  width: 330px;
+  height: 570px;
+  top: 15px;
+  left: -160px;
+  border-width: 2px;
+  border-color: rgba(200, 120, 10, 0.28);
+  transform: rotate(-10deg);
+}
+
+.arc-3 {
+  width: 380px;
+  height: 640px;
+  top: -10px;
+  left: -165px;
+  border-width: 2px;
+  border-color: rgba(200, 120, 10, 0.18);
+  transform: rotate(-10deg);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive Adjustments ===== */
+
+/* Tablet */
+@media (min-width: 640px) {
+  .page-container {
+    max-width: 500px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
   }
-  to {
-    transform: rotate(360deg);
+  .arc-1 { width: 340px; height: 600px; left: -175px; }
+  .arc-2 { width: 400px; height: 680px; left: -180px; }
+  .arc-3 { width: 460px; height: 760px; left: -185px; }
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .page-wrapper {
+    align-items: center;
+    padding: 20px 0;
+  }
+  .page-container {
+    max-width: 430px;
+    min-height: 780px;
+    height: auto;
+    border-radius: 24px;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
+  }
+  .arc-1 { width: 300px; height: 530px; left: -160px; }
+  .arc-2 { width: 350px; height: 600px; left: -165px; }
+  .arc-3 { width: 400px; height: 670px; left: -170px; }
+}
+
+/* Large desktop */
+@media (min-width: 1024px) {
+  .page-wrapper {
+    padding: 30px 0;
+  }
+  .page-container {
+    max-width: 430px;
+    border-radius: 28px;
   }
 }
