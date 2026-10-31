@@ -6,13 +6,41 @@ const Calculator = ({ onNext, formData, setFormData, calcResults, setCalcResults
   const [marketRate, setMarketRate] = useState('');
   const [showResults, setShowResults] = useState(false);
 
+  // Max limits
+  const MAX_YIELD = 40;
+  const MAX_MARKET_RATE = 3000;
+
+  const handleYieldChange = (e) => {
+    const val = e.target.value;
+    if (val === '') { setYieldPerAcre(''); return; }
+    const num = parseFloat(val);
+    if (num > MAX_YIELD) { setYieldPerAcre(String(MAX_YIELD)); return; }
+    setYieldPerAcre(val);
+  };
+
+  const handleMarketRateChange = (e) => {
+    const val = e.target.value;
+    if (val === '') { setMarketRate(''); return; }
+    const num = parseFloat(val);
+    if (num > MAX_MARKET_RATE) { setMarketRate(String(MAX_MARKET_RATE)); return; }
+    setMarketRate(val);
+  };
+
   const handleCalculate = () => {
     const cost = parseFloat(totalCost);
     const yieldVal = parseFloat(yieldPerAcre);
     const rate = parseFloat(marketRate);
 
-    if (isNaN(cost) || isNaN(yieldVal) || isNaN(rate)) {
+    if (isNaN(cost) || isNaN(yieldVal) || isNaN(rate) || cost <= 0 || yieldVal <= 0 || rate <= 0) {
       alert('कृपया सभी फ़ील्ड में सही संख्या भरें');
+      return;
+    }
+    if (yieldVal > MAX_YIELD) {
+      alert(`पैदावार अधिकतम ${MAX_YIELD} क्विंटल/एकड़ हो सकती है`);
+      return;
+    }
+    if (rate > MAX_MARKET_RATE) {
+      alert(`मार्केट रेट अधिकतम ₹${MAX_MARKET_RATE}/क्विंटल हो सकता है`);
       return;
     }
 
@@ -108,13 +136,15 @@ const Calculator = ({ onNext, formData, setFormData, calcResults, setCalcResults
               color: '#000',
             }}
           >
-            पैदावार (क्विंटल/एकड़)
+            पैदावार (क्विंटल/एकड़) <span style={{fontWeight:400, fontSize:'clamp(10px,2.5vw,13px)', color:'#666'}}>अधिकतम {MAX_YIELD}</span>
           </label>
           <input
             type="number"
             value={yieldPerAcre}
-            onChange={(e) => setYieldPerAcre(e.target.value)}
+            onChange={handleYieldChange}
             placeholder="उदाहरण: 30"
+            max={MAX_YIELD}
+            min={0}
             className="w-full border-2 border-black/30 rounded-lg py-2.5 px-3 bg-white/80 text-[14px] sm:text-[16px] outline-none focus:border-pioneer-green transition-colors"
             style={{ fontFamily: "'Inter', sans-serif" }}
           />
@@ -131,13 +161,15 @@ const Calculator = ({ onNext, formData, setFormData, calcResults, setCalcResults
               color: '#000',
             }}
           >
-            मार्केट रेट (₹/क्विंटल)
+            मार्केट रेट (₹/क्विंटल) <span style={{fontWeight:400, fontSize:'clamp(10px,2.5vw,13px)', color:'#666'}}>अधिकतम ₹{MAX_MARKET_RATE}</span>
           </label>
           <input
             type="number"
             value={marketRate}
-            onChange={(e) => setMarketRate(e.target.value)}
+            onChange={handleMarketRateChange}
             placeholder="उदाहरण: 2000"
+            max={MAX_MARKET_RATE}
+            min={0}
             className="w-full border-2 border-black/30 rounded-lg py-2.5 px-3 bg-white/80 text-[14px] sm:text-[16px] outline-none focus:border-pioneer-green transition-colors"
             style={{ fontFamily: "'Inter', sans-serif" }}
           />
